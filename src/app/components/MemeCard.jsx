@@ -20,7 +20,7 @@ export default function MemeCard({ meme }) {
   };
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow-md max-w-full mx-auto">
+    <div className="bg-white p-4 rounded-lg shadow-md max-w-xs mx-auto">
       <img
         src={meme.imageUrl}
         alt={meme.title}

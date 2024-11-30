@@ -28,11 +28,10 @@ export default function HomePage() {
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
       <Navbar />
-      <div className="max-w-2xl mx-auto">
-        <h1 className="text-3xl font-bold mb-4 text-center">ethio Memes</h1>
-        <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      <div className="max-w-7xl ml-20 mr-20 mt-20">
+       
         <TagFilter selectedTag={selectedTag} setSelectedTag={setSelectedTag} />
-        <div className="flex flex-col gap-4 mt-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 mt-6">
           {filteredMemes.map((meme) => (
             <MemeCard key={meme.id} meme={meme} />
           ))}
