@@ -29,8 +29,6 @@ export default function HomePage() {
     <div className="p-6 bg-gray-100 min-h-screen">
       <Navbar />
       <div className="max-w-7xl ml-20 mr-20 mt-20">
-       
-        <TagFilter selectedTag={selectedTag} setSelectedTag={setSelectedTag} />
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 mt-6">
           {filteredMemes.map((meme) => (
             <MemeCard key={meme.id} meme={meme} />

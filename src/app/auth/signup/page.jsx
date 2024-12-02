@@ -7,43 +7,55 @@ import { FaFacebook, FaGoogle } from 'react-icons/fa';
 export default function SignupPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [fullName, setFullName] = useState('');
+    const [username, setUsername] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const router = useRouter();
 
-    const signup = async (userData) => {
-        const response = await fetch('/api/auth/signup', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(userData),
-        });
+    const handleSignup = async (username, password, email) => {
+        try {
+            const response = await fetch("http://localhost:8000/api/signup/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ username, password, email }),
+            });
 
-        if (!response.ok) {
-            throw new Error('Signup failed');
+            if (response.ok) {
+                const data = await response.json();
+                alert("Signup successful!");
+                console.log("Signup successful:", data.message);
+                router.push('/profile'); // Redirect to the profile page
+            } else {
+                const errorData = await response.json();
+                console.error("Signup failed:", errorData);
+                alert("Signup failed: " + JSON.stringify(errorData));
+            }
+        } catch (error) {
+            console.error("Error during signup:", error);
+            alert("An error occurred. Please try again.");
         }
-
-        return response.json();
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (password !== confirmPassword) {
+            alert('Passwords do not match!');
+            return;
+        }
+
         try {
-            await signup({ email, password, fullName, confirmPassword });
-            router.push('/auth/login');
+            await handleSignup(username, password, email);
         } catch (error) {
             console.error(error);
         }
     };
 
     const handleFacebookSignup = () => {
-        // Redirect to Facebook OAuth flow
         window.location.href = '/api/auth/facebook';
     };
 
     const handleGoogleSignup = () => {
-        // Redirect to Google OAuth flow
         window.location.href = '/api/auth/google';
     };
 
@@ -52,6 +64,20 @@ export default function SignupPage() {
             <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
                 <h1 className="text-2xl font-bold text-center text-gray-900">Sign Up</h1>
                 <form onSubmit={handleSubmit} className="space-y-6">
+                    <div>
+                        <label htmlFor="username" className="block text-sm font-medium text-gray-700">
+                            Username
+                        </label>
+                        <input
+                            id="username"
+                            type="text"
+                            placeholder="Username"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            required
+                            className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        />
+                    </div>
                     <div>
                         <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                             Email
@@ -66,7 +92,6 @@ export default function SignupPage() {
                             className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         />
                     </div>
-                    
                     <div>
                         <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                             Password
@@ -95,14 +120,12 @@ export default function SignupPage() {
                             className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         />
                     </div>
-                    <div>
-                        <button
-                            type="submit"
-                            className="w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                        >
-                            Sign Up
-                        </button>
-                    </div>
+                    <button
+                        type="submit"
+                        className="w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    >
+                        Sign Up
+                    </button>
                 </form>
                 <div className="text-center">
                     <p className="text-sm text-gray-600">

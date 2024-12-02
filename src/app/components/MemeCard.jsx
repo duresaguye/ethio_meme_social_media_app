@@ -1,21 +1,25 @@
 import { useState } from 'react';
-import { FaHeart, FaRegHeart } from 'react-icons/fa';
+import { FaHeart, FaRegHeart, FaCommentAlt } from 'react-icons/fa';
 
 export default function MemeCard({ meme }) {
   const [likes, setLikes] = useState(meme.likes);
   const [liked, setLiked] = useState(false);
   const [comments, setComments] = useState(meme.comments || []);
   const [newComment, setNewComment] = useState('');
+  const [isCommenting, setIsCommenting] = useState(false); // To toggle comment input visibility
 
+  // Handle the like button toggle
   const handleLike = () => {
     setLiked(!liked);
     setLikes(liked ? likes - 1 : likes + 1);
   };
 
+  // Handle adding a comment
   const handleAddComment = () => {
     if (newComment.trim() !== '') {
       setComments([...comments, newComment]);
       setNewComment('');
+      setIsCommenting(false); // Close comment input after adding
     }
   };
 
@@ -26,17 +30,7 @@ export default function MemeCard({ meme }) {
         alt={meme.title}
         className="w-full h-auto rounded-lg"
       />
-      <h2 className="text-xl font-bold mt-2 text-center">{meme.title}</h2>
-      <div className="flex justify-center gap-2 my-2">
-        {meme.tags.map((tag) => (
-          <span
-            key={tag}
-            className="bg-gray-200 text-sm px-2 py-1 rounded-full"
-          >
-            #{tag}
-          </span>
-        ))}
-      </div>
+  
       <div className="flex items-center justify-between mt-2">
         <button
           onClick={handleLike}
@@ -44,16 +38,18 @@ export default function MemeCard({ meme }) {
         >
           {liked ? <FaHeart /> : <FaRegHeart />} {likes}
         </button>
+
+        {/* Comment Button */}
+        <button
+          onClick={() => setIsCommenting(!isCommenting)} // Toggle comment section visibility
+          className="flex items-center gap-1 text-gray-500"
+        >
+          <FaCommentAlt /> Comment
+        </button>
       </div>
-      <div className="mt-4">
-        <h3 className="text-lg font-bold mb-2">Comments</h3>
-        <div className="space-y-2">
-          {comments.map((comment, index) => (
-            <div key={index} className="bg-gray-100 p-2 rounded-lg">
-              {comment}
-            </div>
-          ))}
-        </div>
+
+      {/* Conditionally render comment input if isCommenting is true */}
+      {isCommenting && (
         <div className="mt-4">
           <input
             type="text"
@@ -69,6 +65,22 @@ export default function MemeCard({ meme }) {
             Add Comment
           </button>
         </div>
+      )}
+
+      {/* Display Comments */}
+      <div className="mt-4">
+        {comments.length > 0 && (
+          <>
+            <h3 className="text-lg font-bold mb-2">Comments</h3>
+            <div className="space-y-2">
+              {comments.map((comment, index) => (
+                <div key={index} className="bg-gray-100 p-2 rounded-lg">
+                  {comment}
+                </div>
+              ))}
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
