@@ -36,14 +36,14 @@ const Navbar = () => {
                             <FaSignInAlt className="mr-2" /> Login
                         </Link>
 
-                        <ProtectedRoute render={(isAuthenticated) => isAuthenticated}>
-        <Link href="/post" className="flex items-center px-4 py-2 text-gray-800 hover:bg-gray-200">
-          <FaPassport className="mr-2" /> Post
-        </Link>
-        <Link href="/profile" className="flex items-center px-4 py-2 text-gray-800 hover:bg-gray-200">
-          <FaUser className="mr-2" /> Profile
-        </Link>
-      </ProtectedRoute>
+                        <ProtectedRoute>
+                            <Link href="/post" className="flex items-center px-4 py-2 text-gray-800 hover:bg-gray-200">
+                                <FaPassport className="mr-2" /> Post
+                            </Link>
+                            <Link href="/profile" className="flex items-center px-4 py-2 text-gray-800 hover:bg-gray-200">
+                                <FaUser className="mr-2" /> Profile
+                            </Link>
+                        </ProtectedRoute>
                         
                         <Link href="/about" className="flex items-center px-4 py-2 text-gray-800 hover:bg-gray-200">
                             <FaInfoCircle className="mr-2" /> About Us

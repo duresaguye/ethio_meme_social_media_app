@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-const ProtectedRoute = ({ children, render }) => {
+const ProtectedRoute = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(null); // Null indicates loading state
   const router = useRouter();
 
@@ -42,8 +42,14 @@ const ProtectedRoute = ({ children, render }) => {
     return <div>Loading...</div>;
   }
 
-  // Conditionally render children or null based on authentication state
-  return render(isAuthenticated) ? <>{children}</> : null;
+  // Redirect to login if not authenticated
+  if (!isAuthenticated) {
+    router.push("/login");
+    return null; // Prevent rendering until redirection completes
+  }
+
+  // Render children if authenticated
+  return <>{children}</>;
 };
 
 export default ProtectedRoute;
