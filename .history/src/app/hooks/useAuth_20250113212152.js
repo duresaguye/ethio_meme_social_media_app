@@ -6,10 +6,16 @@ export const useAuth = () => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await fetch("http://localhost:8000/api/token/refresh/", {
-          method: "POST",
-          credentials: "include", // Include credentials to send cookies
-        });
+        fetch('http://localhost:8000/api/token/refresh/', {
+          method: 'POST',
+          credentials: 'include',
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log('New Access Token:', data.access_token);
+          })
+          .catch((error) => console.error('Error:', error));
+        
 
         if (response.ok) {
           setIsAuthenticated(true);

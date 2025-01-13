@@ -68,7 +68,6 @@ export default function SignupPage() {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify({ access_token: response.credential }),
-                    credentials: "include",
                     
                 });
     

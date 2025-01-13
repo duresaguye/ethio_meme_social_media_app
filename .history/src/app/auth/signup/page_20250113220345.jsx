@@ -69,7 +69,6 @@ export default function SignupPage() {
                     },
                     body: JSON.stringify({ access_token: response.credential }),
                     credentials: "include",
-                    
                 });
     
                 const data = await res.json();
