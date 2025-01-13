@@ -78,36 +78,31 @@ const handleSignup = async (username, password, email) => {
     }
   };
   const handleFacebookLogin = async (response) => {
-    console.log("Facebook login response received:", response); // Check response object
-    
-    if (response.status !== 'unknown') {
-      try {
-        console.log("Sending Facebook access token to server...");
-        const accessToken = response.authResponse.accessToken;
-        
-        const res = await fetch("http://localhost:8000/api/facebook-login/", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ access_token: accessToken }),
-          credentials: "include", // To send cookies (if any) with the request
-        });
-
+    if (response.status === 'unknown') {
+      console.error("Facebook login failed!");
+      return;
+    }
+  
+    const accessToken = response.authResponse.accessToken;
+    try {
+      const res = await fetch('http://localhost:8000/api/facebook-login/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ access_token: response.credential }),
+          credentials: "include",
+      });
+  
+      if (res.ok) {
         const data = await res.json();
-        console.log("Server response:", res.status, data); // Log server response
-
-        if (res.ok) {
-          console.log("Login successful, updating local storage and navigating...");
-          setIsAuthenticated(true); // Update authentication state
-        } else {
-          console.error("Facebook login failed:", data);
-          alert("Facebook login failed: " + JSON.stringify(data));
-        }
-      } catch (error) {
-        console.error("Error during Facebook login:", error);
-        setIsAuthenticated(false);
+        console.log('Login successful:', data);
+        // Save JWT tokens or perform any other actions you need
+      } else {
+        console.error('Failed to authenticate user');
       }
+    } catch (error) {
+      console.error('Error occurred:', error);
     }
   };
   
@@ -131,5 +126,5 @@ const handleSignup = async (username, password, email) => {
     }
   };
 
-  return { isAuthenticated, handleGoogleLogin,  handleFacebookLogin,logout, handleSignup };
+  return { isAuthenticated, handleGoogleLogin, logout, handleSignup };
 };

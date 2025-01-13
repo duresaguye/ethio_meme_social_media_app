@@ -78,31 +78,25 @@ const handleSignup = async (username, password, email) => {
     }
   };
   const handleFacebookLogin = async (response) => {
-    console.log("Facebook login response received:", response); // Check response object
-    
-    if (response.status !== 'unknown') {
+    if (response.authResponse) {
       try {
-        console.log("Sending Facebook access token to server...");
-        const accessToken = response.authResponse.accessToken;
-        
         const res = await fetch("http://localhost:8000/api/facebook-login/", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ access_token: accessToken }),
-          credentials: "include", // To send cookies (if any) with the request
+          body: JSON.stringify({ access_token: response.authResponse.accessToken }),
         });
 
         const data = await res.json();
-        console.log("Server response:", res.status, data); // Log server response
-
         if (res.ok) {
-          console.log("Login successful, updating local storage and navigating...");
+          // Store tokens in local storage or cookies if needed
+          localStorage.setItem('access_token', data.access);
+          localStorage.setItem('refresh_token', data.refresh);
           setIsAuthenticated(true); // Update authentication state
         } else {
           console.error("Facebook login failed:", data);
-          alert("Facebook login failed: " + JSON.stringify(data));
+          setIsAuthenticated(false);
         }
       } catch (error) {
         console.error("Error during Facebook login:", error);

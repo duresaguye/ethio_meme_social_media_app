@@ -171,15 +171,14 @@ export default function SignupPage() {
                     </p>
                 </div>
                 <div className="flex justify-center space-x-4 mt-4">
-                    <div
-                        
+                    <button
+                        onClick={handleFacebookSignup}
                         className="w-full flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                     >
-                        <FacebookLoginButton />
-                    </div>
+                        <FaFacebook className="mr-2" /> Sign Up with Facebook
+                    </button>
                     {/* Google login button integrated here */}
-                    <div className="w-full flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                    >
+                    <div className="mt-6 text-center">
                         <GoogleLoginButton handleGoogleLogin={handleGoogleLogin} />
                     </div>
                 </div>

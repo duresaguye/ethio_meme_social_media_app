@@ -85,7 +85,7 @@ const handleSignup = async (username, password, email) => {
         console.log("Sending Facebook access token to server...");
         const accessToken = response.authResponse.accessToken;
         
-        const res = await fetch("http://localhost:8000/api/facebook-login/", {
+        const res = await fetch("http://localhost:8000/facebook-login/", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
