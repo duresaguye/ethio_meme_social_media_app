@@ -5,15 +5,38 @@ import { useRouter } from 'next/navigation';
 import { FaFacebook, FaGoogle } from 'react-icons/fa';
 import GoogleLoginButton from '../../components/GoogleLoginButton';
 import FacebookLoginButton from '../../components/FBLoginButton';
-import { useAuth } from '../../hooks/useAuth'; // Import the useAuth hook
 
 export default function SignupPage() {
-    const { handleSignup, handleGoogleLogin, isAuthenticated } = useAuth(); // Destructure functions from useAuth
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const router = useRouter();
+
+    const handleSignup = async (username, password, email) => {
+        try {
+            const response = await fetch("http://localhost:8000/api/signup/", {
+               method: "POST",
+                headers: { "Content-Type": "application/json",},
+                body: JSON.stringify({ username, password, email }),
+                credentials: "include",
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                alert("Signup successful!");
+                console.log("Signup successful:", data.message);
+                router.push('/profile'); // Redirect to the profile page
+            } else {
+                const errorData = await response.json();
+                console.error("Signup failed:", errorData);
+                alert("Signup failed: " + JSON.stringify(errorData));
+            }
+        } catch (error) {
+            console.error("Error during signup:", error);
+            alert("An error occurred. Please try again.");
+        }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -23,7 +46,7 @@ export default function SignupPage() {
         }
 
         try {
-            await handleSignup(username, password, email); // Call handleSignup from useAuth
+            await handleSignup(username, password, email);
         } catch (error) {
             console.error(error);
         }
@@ -32,6 +55,44 @@ export default function SignupPage() {
     const handleFacebookSignup = () => {
         window.location.href = '/api/auth/facebook';
     };
+
+    const handleGoogleLogin = async (response) => {
+        console.log("Google login response received:", response); // Check response object
+        if (response.credential) {
+            try {
+                console.log("Sending Google credential to server...");
+                const res = await fetch("http://localhost:8000/api/google-login/", {
+                   method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ access_token: response.credential }),
+                    credentials: "include",
+                    
+                });
+    
+                const data = await res.json();
+                console.log("Server response:", res.status, data); // Log server response
+    
+                if (res.ok) {
+                    console.log("Login successful, updating local storage and navigating...");
+                    localStorage.setItem('access_token', data.access);
+                    localStorage.setItem('refresh_token', data.refresh);
+    
+                    router.push('/profile'); // Redirect to profile or home after successful login
+                } else {
+                    console.error("Google login failed:", data);
+                    alert("Google login failed: " + JSON.stringify(data));
+                }
+            } catch (error) {
+                console.error("Error verifying Google token:", error);
+                alert("An error occurred. Please try again.");
+            }
+        } else {
+            console.warn("No credential found in response.");
+        }
+    };
+    
 
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -111,12 +172,14 @@ export default function SignupPage() {
                 </div>
                 <div className="flex justify-center space-x-4 mt-4">
                     <div
+                        
                         className="w-full flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                     >
-                        <FacebookLoginButton handleFacebookLogin={handleFacebookSignup} />
+                        <FacebookLoginButton />
                     </div>
                     {/* Google login button integrated here */}
-                    <div className="w-full flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    <div className="w-full flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                    >
                         <GoogleLoginButton handleGoogleLogin={handleGoogleLogin} />
                     </div>
                 </div>
