@@ -14,7 +14,7 @@ export default function SignupPage() {
     const handleSignup = async (username, password, email) => {
         try {
             const response = await fetch("http://localhost:8000/api/signup/", {
-                method: "POST",
+               method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },

@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 
 const uploadMeme = async ({ title, imageUrl }) => {
-  const response = await axios.post('/api/memes', { title, imageUrl });
+  const response = await axios.OPTIONS('/api/memes', { title, imageUrl });
   return response.data;
 };
 

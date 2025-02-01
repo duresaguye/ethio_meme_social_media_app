@@ -7,7 +7,7 @@ export const useAuth = () => {
     const checkAuth = async () => {
       try {
         const response = await fetch("http://localhost:8000/api/token/refresh/", {
-          method: "POST",
+         method: "POST",
           credentials: "include",
         });
 
@@ -28,7 +28,7 @@ export const useAuth = () => {
     if (response.credential) {
       // Assuming you have an endpoint to verify the Google token
       fetch("http://localhost:8000/api/auth/google/", {
-        method: "POST",
+       method: "POST",
         headers: {
           "Content-Type": "application/json",
         },

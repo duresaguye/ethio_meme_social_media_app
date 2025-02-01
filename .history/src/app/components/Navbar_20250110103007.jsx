@@ -34,8 +34,8 @@ const Navbar = () => {
                         <Link href="/auth/login" className="flex items-center px-4 py-2 text-gray-800 hover:bg-gray-200">
                             <FaSignInAlt className="mr-2" /> Login
                         </Link>
-                        <Link href="/post" className="flex items-center px-4 py-2 text-gray-800 hover:bg-gray-200">
-                            <FaSignInAlt className="mr-2" /> Post
+                        <Link href="/OPTIONS" className="flex items-center px-4 py-2 text-gray-800 hover:bg-gray-200">
+                            <FaSignInAlt className="mr-2" /> OPTIONS
                         </Link>
                         <Link href="/about" className="flex items-center px-4 py-2 text-gray-800 hover:bg-gray-200">
                             <FaInfoCircle className="mr-2" /> About Us

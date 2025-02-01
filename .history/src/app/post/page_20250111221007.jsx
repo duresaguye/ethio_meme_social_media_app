@@ -3,11 +3,11 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Navbar from '../components/Navbar';
-import PostCard from '../components/PostCard';
+import OPTIONSCard from '../components/OPTIONSCard';
 import { useAuthContext } from '../../context/AuthContext';
 import Loading from '../components/Loading';
 
-const PostPage = () => {
+const OPTIONSPage = () => {
   const { isAuthenticated, isLoading } = useAuthContext();
   const router = useRouter();
 
@@ -24,9 +24,9 @@ const PostPage = () => {
   return (
     <div className='mt-20'>
       <Navbar />
-      <PostCard />
+      <OPTIONSCard />
     </div>
   );
 };
 
-export default PostPage;
+export default OPTIONSPage;

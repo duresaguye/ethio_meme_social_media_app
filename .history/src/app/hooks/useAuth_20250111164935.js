@@ -7,7 +7,7 @@ export const useAuth = () => {
     const checkAuth = async () => {
       try {
         const response = await fetch("http://localhost:8000/api/token/refresh/", {
-          method: "POST",
+         method: "POST",
           credentials: "include", 
         });
 
@@ -28,7 +28,7 @@ export const useAuth = () => {
     if (response.credential) {
       try {
         const res = await fetch("http://localhost:8000/api/google-login/", {
-          method: "POST",
+         method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
@@ -56,7 +56,7 @@ export const useAuth = () => {
     console.log("Initiating logout...");
     try {
         const response = await fetch("http://localhost:8000/api/logout/", {
-            method: "POST",
+           method: "POST",
             credentials: "include",
         });
 

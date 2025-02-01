@@ -12,7 +12,7 @@ const FacebookLoginButton = () => {
         const accessToken = response.authResponse.accessToken;
         
         const res = await fetch("http://localhost:8000/api/facebook-login/", {
-          method: "POST",
+         method: "POST",
           headers: {
             "Content-Type": "application/json",
           },

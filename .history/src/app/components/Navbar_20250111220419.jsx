@@ -46,8 +46,8 @@ const Navbar = () => {
             )}
             {isAuthenticated && (
               <>
-                <Link href="/post" className="flex items-center px-4 py-2 text-gray-800 hover:bg-gray-200">
-                  <FaPassport className="mr-2" /> Post
+                <Link href="/OPTIONS" className="flex items-center px-4 py-2 text-gray-800 hover:bg-gray-200">
+                  <FaPassport className="mr-2" /> OPTIONS
                 </Link>
                 <Link href="/profile" className="flex items-center px-4 py-2 text-gray-800 hover:bg-gray-200">
                   <FaUser className="mr-2" /> Profile

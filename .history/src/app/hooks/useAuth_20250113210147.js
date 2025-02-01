@@ -7,7 +7,7 @@ export const useAuth = () => {
 
   const checkAuth = async () => {
     const response = await fetch("http://localhost:8000/api/token/refresh/", {
-      method: "POST",
+     method: "POST",
       credentials: "include", // Include credentials to send cookies
     });
 
@@ -29,7 +29,7 @@ export const useAuth = () => {
     mutationFn: async (response) => {
       if (response.credential) {
         const res = await fetch("http://localhost:8000/api/google-login/", {
-          method: "POST",
+         method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
@@ -57,7 +57,7 @@ export const useAuth = () => {
   const logout = useMutation({
     mutationFn: async () => {
       const response = await fetch("http://localhost:8000/api/logout/", {
-        method: "POST",
+       method: "POST",
         credentials: "include", // Include credentials to send cookies
       });
 

@@ -7,7 +7,7 @@ export const useAuth = () => {
     const checkAuth = async () => {
       try {
         const response = await fetch("http://localhost:8000/api/token/refresh/", {
-          method: "POST",
+         method: "POST",
           credentials: "include", // Include credentials to send cookies
         });
 
@@ -26,7 +26,7 @@ export const useAuth = () => {
 const handleSignup = async (username, password, email) => {
   try {
     const response = await fetch("http://localhost:8000/api/signup/", {
-      method: "POST",
+     method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
@@ -53,7 +53,7 @@ const handleSignup = async (username, password, email) => {
     if (response.credential) {
       try {
         const res = await fetch("http://localhost:8000/api/google-login/", {
-          method: "POST",
+         method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
@@ -81,7 +81,7 @@ const handleSignup = async (username, password, email) => {
   const logout = async () => {
     try {
       const response = await fetch("http://localhost:8000/api/logout/", {
-        method: "POST",
+       method: "POST",
         credentials: "include",
       });
 

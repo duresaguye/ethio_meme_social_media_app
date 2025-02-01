@@ -9,7 +9,7 @@ export const useAuth = () => {
         const refreshToken = localStorage.getItem("refresh_token"); // or get it from cookies
     
         const response = await fetch("http://localhost:8000/api/token/refresh/", {
-          method: "POST",
+         method: "POST",
           credentials: "include",
           headers: {
             "Content-Type": "application/json",
@@ -35,7 +35,7 @@ export const useAuth = () => {
   const handleGoogleLogin = (response) => {
     if (response.credential) {
       fetch("http://localhost:8000/api/auth/google/", {
-        method: "POST",
+       method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
@@ -59,7 +59,7 @@ export const useAuth = () => {
   const logout = async () => {
     try {
       const response = await fetch("http://localhost:8000/api/logout/", {
-        method: "POST",
+       method: "POST",
         credentials: "include",
       });
 

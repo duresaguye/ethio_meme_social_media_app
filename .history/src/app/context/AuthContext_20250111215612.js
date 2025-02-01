@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
     const checkAuth = async () => {
       try {
         const response = await fetch("http://localhost:8000/api/token/refresh/", {
-          method: "POST",
+         method: "POST",
           credentials: "include",
         });
 

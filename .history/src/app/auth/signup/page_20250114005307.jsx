@@ -16,7 +16,7 @@ export default function SignupPage() {
     const handleSignup = async (username, password, email) => {
         try {
             const response = await fetch("http://localhost:8000/api/signup/", {
-                method: "POST",
+               method: "POST",
                 headers: { "Content-Type": "application/json",},
                 body: JSON.stringify({ username, password, email }),
                 credentials: "include",
@@ -62,7 +62,7 @@ export default function SignupPage() {
             try {
                 console.log("Sending Google credential to server...");
                 const res = await fetch("http://localhost:8000/api/google-login/", {
-                    method: "POST",
+                   method: "POST",
                     headers: {
                         "Content-Type": "application/json",
                     },
