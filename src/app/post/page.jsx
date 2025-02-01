@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Navbar from '../components/Navbar';
-import OPTIONSCard from '../components/OPTIONSCard';
+import PostCard from '../components/PostCard';
 import { useAuthContext } from '../context/AuthContext';
 import Loading from '../components/Loading';
 
@@ -24,7 +24,7 @@ const OPTIONSPage = () => {
   return (
     <div className='mt-20'>
       <Navbar />
-      <OPTIONSCard />
+      <PostCard />
     </div>
   );
 };
